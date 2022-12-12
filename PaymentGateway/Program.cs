@@ -1,4 +1,5 @@
 
+using BankSimulator;
 using Microsoft.Extensions.DependencyInjection;
 using UserInfoStorage;
 
@@ -17,6 +18,7 @@ namespace PaymentGateway
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<IUserInfoStorage, UserInfoStorage.UserInfoStorage>();
+            builder.Services.AddSingleton<IAcquiringBank, AcquiringBank>();
 
             var app = builder.Build();
 
@@ -26,6 +28,7 @@ namespace PaymentGateway
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
 
             app.UseHttpsRedirection();
 

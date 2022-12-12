@@ -6,4 +6,12 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="IAcquiringBank.cs~RF13673a79.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserInfoStorage\UserInfoStorage.csproj" />
+  </ItemGroup>
+
 </Project>

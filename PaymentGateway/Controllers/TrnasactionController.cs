@@ -9,24 +9,36 @@ namespace PaymentGateway.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TrnasactionController : ControllerBase
+    public class TransactionController : ControllerBase
     {
         private readonly IUserInfoStorage _userInfoStorage;
-        public TrnasactionController(IUserInfoStorage userInfoStorage)
+        public TransactionController(IUserInfoStorage userInfoStorage)
         {
             _userInfoStorage = userInfoStorage;
         }
 
         // GET api/<TrnasactionController>/5
-        [HttpGet("{id}, {status}")]
-        public void Get(string id, string status)
+        [HttpGet("success/{id}/{token}", Name = "Success")]
+        public void Success(string id, string token)
         {
             var payment = new Payment
             {
                 Id = id,
-                Status = status
+                Status = "Success"
             };
-            _userInfoStorage.SaveOrUpdatePayment(payment);
+            _userInfoStorage.UpdatePayment(payment, token);
+        }
+
+        // GET api/<TrnasactionController>/5
+        [HttpGet("failure/{id}/{token}", Name = "Failure")]
+        public void Failure(string id, string token)
+        {
+            var payment = new Payment
+            {
+                Id = id,
+                Status = "Failure"
+            };
+            _userInfoStorage.UpdatePayment(payment, token);
         }
     }
 }

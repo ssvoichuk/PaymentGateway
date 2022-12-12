@@ -6,6 +6,7 @@ namespace UserInfoStorage
     {
         Payment GetPaymentById(string id);
         List<Payment> GetPayments();
-        void SaveOrUpdatePayment(Payment payment);
+        void SavePayment(Payment payment);
+        void UpdatePayment(Payment payment, string token);
     }
 }

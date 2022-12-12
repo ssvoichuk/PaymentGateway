@@ -1,19 +1,35 @@
-﻿namespace BankSimulator
+﻿using PaymentGateway.Models;
+using System;
+using System.Net;
+
+namespace BankSimulator
 {
-    public class AcquiringBank
+
+    public class AcquiringBank : IAcquiringBank
     {
-        public async Task ProceedPayment()
+        static readonly HttpClient client = new HttpClient();
+        public async Task ProceedPayment(Payment payment, bool success)
         {
+            //simulate request to third API
             await Task.Delay(1000);
-        }
-        public void SimulateSuccessUrl()
-        {
+            if (success)
+            {
+                await SimulateSuccessUrl(payment.SuccessUrl);
+            }
+            else
+            {
+                await SimulateFailureUrl(payment.FailureUrl);
+            }
 
         }
-
-        public void SimulateFailureUrl()
+        public async Task SimulateSuccessUrl(string url)
         {
+            await client.GetStringAsync(url);
+        }
 
+        public async Task SimulateFailureUrl(string url)
+        {
+            await client.GetStringAsync(url);
         }
     }
 }

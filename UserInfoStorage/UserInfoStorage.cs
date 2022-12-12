@@ -5,6 +5,7 @@ namespace UserInfoStorage
 {
     public class UserInfoStorage : IUserInfoStorage
     {
+        //init with test data
         private static List<Payment> payments = new List<Payment> {
                 new Payment {
                     Id = "0f8fad5b-d9cb-469f-a165-70867728950e",
@@ -19,26 +20,32 @@ namespace UserInfoStorage
             };
         public List<Payment> GetPayments()
         {
-            return payments.Select(s=> new Payment { 
+            return payments.Select(s => new Payment
+            {
                 Id = s.Id,
                 CardNumber = SecureCardNumber(s.CardNumber),
-                Status= s.Status,
+                Status = s.Status,
+                SecureToken= string.Empty
             }).ToList();
         }
         public Payment GetPaymentById(string id)
         {
             return payments.SingleOrDefault(x => x.Id == id);
         }
-        public void SaveOrUpdatePayment(Payment payment)
+        public void SavePayment(Payment payment)
         {
-            var _payment = payments.SingleOrDefault(_ => _.Id == payment.Id);
+            var _payment = payments.SingleOrDefault(p => p.Id == payment.Id);
 
             if (_payment == null)
             {
-                payment.Id = Guid.NewGuid().ToString();
                 payments.Add(payment);
             }
-            else
+        }
+
+        public void UpdatePayment(Payment payment, string token)
+        {
+            var _payment = payments.SingleOrDefault(_ => _.Id == payment.Id);
+            if (_payment != null && token == _payment.SecureToken)
             {
                 _payment.Status = payment.Status;
             }

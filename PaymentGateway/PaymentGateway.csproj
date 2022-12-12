@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BankSimulator\BankSimulator.csproj" />
     <ProjectReference Include="..\UserInfoStorage\UserInfoStorage.csproj" />
   </ItemGroup>
 
